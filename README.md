@@ -1,4 +1,4 @@
-## State UAV Navigation with Asctec Firefly and Realsense R200 Camera
+## State UAV Navigation with AscTec Firefly and Realsense R200 Camera
 
 
 This repository implements the 3D Localisation, Mapping and reactive Pathplanning/Pathfollowing of the AscTec Firefly with a mounted Realsense R200 Camera.
