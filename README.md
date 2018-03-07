@@ -3,9 +3,9 @@ State UAV Navigation with Asctec Firefly and Realsense R200 Camera
 
 This reporsitory implements the 3D Localisation, Mapping and reactive Pathplanning/Pathfollowing of the Astec Firefly with an mounted Realsense R200 Camera.
 
--For the 3D Localisation we create position data using extended kalman filtered signals from the firefly-IMU(inertial measurement unit) and camera-VO(visual odometry). The IMU is already built-in the Firefly. Visual odometry is created from the realsense R200 camera.
+- For the 3D Localisation we create position data using extended kalman filtered signals from the firefly-IMU(inertial measurement unit) and camera-VO(visual odometry). The IMU is already built-in the Firefly. Visual odometry is created from the realsense R200 camera.
 
--3D Mapping was first implemented with octomap. Later in the final version it was upgraded to RTAB-Map (Real-Time Appearance-Based Mapping) which has more features. Any other similar occupancy grid mappings would also work. Similar other depth cameras than realsense r200 would also work.
+- 3D Mapping was first implemented with octomap. Later in the final version it was upgraded to RTAB-Map (Real-Time Appearance-Based Mapping) which has more features. Any other similar occupancy grid mappings would also work. Similar other depth cameras than realsense r200 would also work.
 
 - The reactive Pathplanning is implemented with the OMPL(Open Motion Planning Library) in Moveit!(Motion Planning Framework) using the real-time generated maps from RTAB-Map. 
 
