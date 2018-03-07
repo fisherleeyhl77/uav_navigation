@@ -3,13 +3,13 @@
 
 This repository implements the 3D Localisation, Mapping and reactive Pathplanning/Pathfollowing of the AscTec Firefly with a mounted Realsense R200 Camera.
 
-- For the 3D Localisation we create position data using extended kalman filtered signals from the firefly-IMU(inertial measurement unit) and camera-VO(visual odometry). The IMU is already built-in the Firefly. Visual odometry is created from the realsense R200 camera.
+- For the 3D Localisation we create position data using extended kalman filtered signals from the firefly-IMU(inertial measurement unit) and camera-VO(Visual Odometry). The IMU is already embedded in the Firefly. Visual odometry is created from the realsense R200 camera.
 
-- 3D Mapping was first implemented with octomap. Later in the final version it was upgraded to RTAB-Map (Real-Time Appearance-Based Mapping) which has more features. Any other similar occupancy grid mappings would also work. Similar other depth cameras than realsense r200 would also work.
+- 3D Mapping was first implemented with octomap and the simulation still uses octomap. In the final version for the real world implementation we use however RTAB-Map (Real-Time Appearance-Based Mapping) instead which has more features. But any other similar occupancy grid mappings would also work. Using different depth cameras instead of the realsense r200 is also possible.
 
 - The reactive Pathplanning is implemented with the OMPL(Open Motion Planning Library) in Moveit!(Motion Planning Framework) using the real-time generated maps from RTAB-Map. 
 
-- For the Pathfollowing we use the generated obstacle avoiding paths and create custom controller signals the Asctec Firefly.
+- For the Pathfollowing we use the generated obstacle avoiding paths and create custom controller signals for the AscTec Firefly.
 
 
 
@@ -24,7 +24,7 @@ This repository implements the 3D Localisation, Mapping and reactive Pathplannin
 $ sudo apt-get install ros-kinetic-moveit ros-kinetic-rtabmap-ros ros-kinetic-mavlink ros-kinetic-robot-pose-ekf ros-kinetic-octomap-ros ros-kinetic-joy python-wstool python-catkin-tools protobuf-compiler libgoogle-glog-dev ros-kinetic-control-toolbox
 ```
 
-3. Install Realsense R200 camera by following instructions on:
+3. Install realsense r200 camera by following instructions on:
 
 http://wiki.ros.org/realsense_camera
 
@@ -39,7 +39,7 @@ $ cd ~/catkin_ws/
 $ catkin build
 ```
 
-In case of "error no module future" run:
+In case of "error no module future":
 
 ```
 $ sudo apt-get install python-pip
@@ -53,7 +53,7 @@ $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 $ source ~/.bashrc 
 ```
 
-### Usage Instructions for simulated environment
+### Usage Instructions for the Simulated Environment
 
 ```
 $ roslaunch uav_navigation_bringup simulation_bringup.launch
@@ -67,7 +67,7 @@ At the same time it will start in parallel Moveit in Rviz for pathplanning.
 
 ![path_in_rviz](images/path_in_rviz_2.png)
 
-### Usage Instructions for real environment
+### Usage Instructions for the Realworld Implementation
 
 1. Connect the r200 camera and launch:
 
