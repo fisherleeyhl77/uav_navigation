@@ -1,4 +1,4 @@
-#State UAV Navigation with Asctec Firefly and Realsense R200 Camera
+# State UAV Navigation with Asctec Firefly and Realsense R200 Camera
 
 
 This repository implements the 3D Localisation, Mapping and reactive Pathplanning/Pathfollowing of the AscTec Firefly with a mounted Realsense R200 Camera.
@@ -13,7 +13,7 @@ This repository implements the 3D Localisation, Mapping and reactive Pathplannin
 
 
 
-##Installation Instructions for Ubuntu 16.04 with ROS Kinetic
+## Installation Instructions for Ubuntu 16.04 with ROS Kinetic
 
 
 1. Install and initialize ROS kinetic desktop full.
@@ -51,13 +51,13 @@ $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 $ source ~/.bashrc 
 ```
 
-##Usage Instructions for simulated environment
+## Usage Instructions for simulated environment
 
 ```
 $ roslaunch uav_navigation_bringup firefly_and_obstacle_simulation.launch
 ``` 
 
-##Usage Instructions for real environment
+## Usage Instructions for real environment
 
 1. Connect the r200 camera and launch in seperate terminals:
 
