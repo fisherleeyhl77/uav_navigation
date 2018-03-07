@@ -1,7 +1,7 @@
 State UAV Navigation with Asctec Firefly and Realsense R200 Camera
 ------------------------------------------------------------------
 
-This reporsitory implements the 3D Localisation, Mapping and reactive Pathplanning/Pathfollowing of the Astec Firefly with an mounted Realsense R200 Camera.
+This reporsitory implements the 3D Localisation, Mapping and reactive Pathplanning/Pathfollowing of the AscTec Firefly with a mounted Realsense R200 Camera.
 
 - For the 3D Localisation we create position data using extended kalman filtered signals from the firefly-IMU(inertial measurement unit) and camera-VO(visual odometry). The IMU is already built-in the Firefly. Visual odometry is created from the realsense R200 camera.
 
@@ -26,7 +26,8 @@ Installation Instructions - Ubuntu 16.04 with ROS Kinetic
 
  $ mkdir -p ~/catkin_ws/src
  $ cd ~/catkin_ws/src
- $ git clone https://github.com/nihsal/rotors_simulator.git
+ $ git clone https://github.com/nihsal/uav_navigation.git
+ $ git clone https://github.com/ethz-asl/mav_comm.git
  $ cd ~/catkin_ws/
  $ catkin build
 
@@ -40,6 +41,5 @@ Installation Instructions - Ubuntu 16.04 with ROS Kinetic
 
  4. Add sourcing to your `~/.bashrc` file:
 
-   $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
-   $ source ~/.bashrc 
-
+ $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
+ $ source ~/.bashrc 
