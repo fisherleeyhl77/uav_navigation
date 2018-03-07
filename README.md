@@ -1,7 +1,7 @@
-State UAV Navigation with Asctec Firefly and Realsense R200 Camera
-------------------------------------------------------------------
+#State UAV Navigation with Asctec Firefly and Realsense R200 Camera
 
-This reporsitory implements the 3D Localisation, Mapping and reactive Pathplanning/Pathfollowing of the AscTec Firefly with a mounted Realsense R200 Camera.
+
+This repository implements the 3D Localisation, Mapping and reactive Pathplanning/Pathfollowing of the AscTec Firefly with a mounted Realsense R200 Camera.
 
 - For the 3D Localisation we create position data using extended kalman filtered signals from the firefly-IMU(inertial measurement unit) and camera-VO(visual odometry). The IMU is already built-in the Firefly. Visual odometry is created from the realsense R200 camera.
 
@@ -13,18 +13,22 @@ This reporsitory implements the 3D Localisation, Mapping and reactive Pathplanni
 
 
 
-Installation Instructions - Ubuntu 16.04 with ROS Kinetic
----------------------------------------------------------
+##Installation Instructions for Ubuntu 16.04 with ROS Kinetic
+
 
 1. Install and initialize ROS kinetic desktop full.
 
-2. Install additional necessary packages:
+2. Install additional packages:
 
 ```
-$ sudo apt-get install ros-kinetic-moveit ros-kinetic-rtabmap-ros ros-kinetic-mavlink ros-kinetic-octomap-ros ros-kinetic-joy python-wstool python-catkin-tools protobuf-compiler libgoogle-glog-dev ros-kinetic-control-toolbox
+$ sudo apt-get install ros-kinetic-moveit ros-kinetic-rtabmap-ros ros-kinetic-mavlink ros-kinetic-robot-pose-ekf ros-kinetic-octomap-ros ros-kinetic-joy python-wstool python-catkin-tools protobuf-compiler libgoogle-glog-dev ros-kinetic-control-toolbox
 ```
 
-3. Create and build catkin workspace with the project:
+3. Install Realsense R200 camera by following instructions on:
+
+http://wiki.ros.org/realsense_camera
+
+4. Create and build catkin workspace with the project:
 
 ```
 $ mkdir -p ~/catkin_ws/src
@@ -35,17 +39,32 @@ $ cd ~/catkin_ws/
 $ catkin build
 ```
 
-It might ask for additional packages which you can just install with:
+In case of "error no module future" run:
 
-$ sudo apt-get install ros-kinetic-* (package needed)
+ $ sudo apt-get install python-pip
+ $ pip install future 
 
-In case of "error no module future":
+5. Add sourcing to your `~/.bashrc` file:
 
-$ sudo apt-get install python-pip
-$ pip install future 
-
- 4. Add sourcing to your `~/.bashrc` file:
 ```
 $ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 $ source ~/.bashrc 
 ```
+
+##Usage Instructions for simulated environment
+
+```
+$ roslaunch uav_navigation_bringup firefly_and_obstacle_simulation.launch
+``` 
+
+##Usage Instructions for real environment
+
+1. Connect the r200 camera and launch in seperate terminals:
+
+```
+$ roslaunch uav_navigation_bringup r200_nodelet_rgbd.launch 
+$ roslaunch uav_navigation_bringup rtabmap_mapping.launch
+$ roslaunch uav_navigation_bringup demo_moveit.launch
+
+``` 
+
