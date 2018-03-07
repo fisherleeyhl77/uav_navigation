@@ -69,7 +69,7 @@ At the same time it will start in parallel Moveit in Rviz for pathplanning.
 
 ### Usage Instructions for the Realworld Implementation
 
-1. Connect the r200 camera and launch:
+Connect the r200 camera and launch:
 
 ```
 $ roslaunch uav_navigation_bringup uav_bringup.launch 
