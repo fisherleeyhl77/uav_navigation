@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<launch>
+  <group name="demo_launch">
+    <include file="$(find uav_navigation_bringup)/launch/simulation_uav_and_obstacle.launch" />
+    <include file="$(find uav_navigation_bringup)/launch/simulation_moveit.launch" />
+  </group>
+</launch>
