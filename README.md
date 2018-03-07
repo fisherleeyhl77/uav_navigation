@@ -67,7 +67,7 @@ At the same time it will start in parallel Moveit in Rviz for pathplanning.
 
 ![path_in_rviz](images/path_in_rviz_2.png)
 
-### Usage Instructions for the Realworld Implementation
+### Usage Instructions for the Real-world Implementation
 
 Connect the r200 camera and launch:
 
