@@ -61,12 +61,10 @@ $ roslaunch uav_navigation_bringup firefly_and_obstacle_simulation.launch
 
 ## Usage Instructions for real environment
 
-1. Connect the r200 camera and launch in seperate terminals:
+1. Connect the r200 camera and launch:
 
 ```
-$ roslaunch uav_navigation_bringup r200_nodelet_rgbd.launch 
-$ roslaunch uav_navigation_bringup rtabmap_mapping.launch
-$ roslaunch uav_navigation_bringup demo_moveit.launch
+$ roslaunch uav_navigation_bringup uav_bringup.launch 
 
 ``` 
 
