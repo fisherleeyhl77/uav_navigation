@@ -59,11 +59,11 @@ $ source ~/.bashrc
 $ roslaunch uav_navigation_bringup simulation_bringup.launch
 ``` 
 
-This will start a gazebo simulation of a hovering Firefly, an attached realsense camera and a wall with two windows in front. 
+This launch file will start a gazebo simulation of a hovering firefly with an attached r200 camera and a wall with two windows in front. 
 
 ![uav_and_obstacle](images/uav_and_obstacle.png)
 
-At the same time in parallel it will also start in RVIZ moveit for the pathplanning. 
+At the same time it will start in parallel Moveit in Rviz for pathplanning. 
 
 ![path_in_rviz](images/path_in_rviz_2.png)
 
@@ -75,7 +75,7 @@ At the same time in parallel it will also start in RVIZ moveit for the pathplann
 $ roslaunch uav_navigation_bringup uav_bringup.launch 
 ``` 
 
-This will start the camera, generate visual odometry, create a RTAB-Map and open in RVIZ interface for pathplanning with Moveit.
+This launch file will initiate the camera, generate visual odometry, create a RTAB-Map of the environment and open Moveit in RVIZ for pathplanning.
 
-![realtime](images/realtime.png)
+![realtime_navi](images/realtime_navi.png)
 
