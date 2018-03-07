@@ -20,28 +20,35 @@ Installation Instructions - Ubuntu 16.04 with ROS Kinetic
 
  2. Install additional necessary packages:
 
+ ```
  $ sudo apt-get install ros-kinetic-moveit ros-kinetic-rtabmap-ros ros-kinetic-mavlink ros-kinetic-octomap-ros ros-kinetic-joy python-wstool python-catkin-tools protobuf-compiler libgoogle-glog-dev ros-kinetic-control-toolbox
+ ```
+
 
  3. Create and build catkin workspace with the project:
 
+```
 	$ mkdir -p ~/catkin_ws/src
 	$ cd ~/catkin_ws/src
 	$ git clone https://github.com/nihsal/uav_navigation.git
 	$ git clone https://github.com/ethz-asl/mav_comm.git
 	$ cd ~/catkin_ws/
 	$ catkin build
+```
 
- It might ask for additional packages which you can just install with:
+It might ask for additional packages which you can just install with:
 
 	$ sudo apt-get install ros-kinetic-* (package needed)
 
- In case of "error no module future":
+In case of "error no module future":
 
 	$ sudo apt-get install python-pip
 	$ pip install future 
 
 
- 4. Add sourcing to your `~/.bashrc` file:
 
+ 4. Add sourcing to your `~/.bashrc` file:
+```
 	$ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 	$ source ~/.bashrc 
+```
