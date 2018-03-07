@@ -41,8 +41,10 @@ $ catkin build
 
 In case of "error no module future" run:
 
- $ sudo apt-get install python-pip
- $ pip install future 
+```
+$ sudo apt-get install python-pip
+$ pip install future
+```
 
 5. Add sourcing to your `~/.bashrc` file:
 
