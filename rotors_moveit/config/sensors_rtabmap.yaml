@@ -1,3 +1,0 @@
-sensors:
- - sensor_plugin: occupancy_map_monitor/MoveItExternalOctomapUpdater
-   octomap_topic: /rtabmap/octomap_binary
