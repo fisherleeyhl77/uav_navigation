@@ -25,7 +25,7 @@ This repository presents a solution for autonomous Unmanned Aerial Vehicle (UAV)
 2. Install additional packages:
 
 ```
-$ sudo apt-get install ros-kinetic-moveit ros-kinetic-rtabmap-ros ros-kinetic-mavlink ros-kinetic-mav-msgs ros-kinetic-robot-pose-ekf ros-kinetic-octomap-ros ros-kinetic-joy python-wstool python-catkin-tools protobuf-compiler libgoogle-glog-dev ros-kinetic-control-toolbox
+$ sudo apt-get install ros-kinetic-moveit ros-kinetic-rtabmap-ros ros-kinetic-mavlink ros-kinetic-mav-msgs ros-kinetic-robot-pose-ekf ros-kinetic-octomap-ros ros-kinetic-joy python-wstool python-catkin-tools protobuf-compiler libgoogle-glog-dev ros-kinetic-control-toolbox ros-kinetic-mavros
 ```
 
 3. Install realsense r200 camera by following instructions on:
@@ -64,11 +64,13 @@ $ roslaunch uav_navigation_bringup simulation_bringup.launch
 
 This launch file will start a gazebo simulation of a hovering firefly with an attached r200 camera and a wall with two windows in front. 
 
-![uav_and_obstacle](images/uav_and_obstacle.png)
+Gazebo            |  RVIZ
+:-------------------------:|:-------------------------:
+![uav_and_obstacle](images/uav_and_obstacle.png)  |  ![path_in_rviz](images/path_in_rviz_1.png)
 
-At the same time it will start in parallel Moveit in Rviz for pathplanning. 
+At the same time in parallel it will launch Moveit in Rviz for trajectory planning. 
 
-![path_in_rviz](images/path_in_rviz_1.png)
+
 
 ### Usage Instructions for the Real-world Implementation
 
@@ -78,7 +80,7 @@ Connect the r200 camera and launch:
 $ roslaunch uav_navigation_bringup uav_bringup.launch 
 ``` 
 
-This launch file will initiate the camera, generate visual odometry, create a RTAB-Map of the environment and open Moveit in RVIZ for pathplanning.
+This launch file will initiate the camera, generate visual odometry, create a RTAB-Map of the environment and open Moveit in RVIZ for trajectory planning.
 
 ![realtime_obstacle](images/realtime_obstacle.png)
 

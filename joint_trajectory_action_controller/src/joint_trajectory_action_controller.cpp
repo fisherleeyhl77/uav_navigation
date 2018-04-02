@@ -1,14 +1,30 @@
+/**
+ * Joint Trajectory Controller
+ *
+ * This Controller translates the produced trajectory into an action.
+ *
+ * Date: 2018/02/04
+ * Contact: nihad.s91@gmail.com
+ */
+
+#include <thread>
+#include <chrono>
+
+#include <Eigen/Core>
+#include <mav_msgs/conversions.h>
+#include <mav_msgs/default_topics.h>
+#include <std_srvs/Empty.h>
 #include <ros/ros.h>
 #include <actionlib/server/action_server.h>
 #include <pthread.h>
 
 #include <trajectory_msgs/MultiDOFJointTrajectory.h>
-#include <joint_trajectory_action_controller/MultiDOFFollowJointTrajectoryAction.h>
+#include <joint_trajectory_action_controller/MultiDofFollowJointTrajectoryAction.h>
 #include <geometry_msgs/Twist.h>
 
 class Controller{
 private:
-	typedef actionlib::ActionServer<joint_trajectory_action_controller::MultiDOFFollowJointTrajectoryAction> ActionServer;
+	typedef actionlib::ActionServer<joint_trajectory_action_controller::MultiDofFollowJointTrajectoryAction> ActionServer;
 	typedef ActionServer::GoalHandle GoalHandle;
 public:
 	Controller(ros::NodeHandle &n) :
@@ -26,19 +42,23 @@ public:
 		empty.angular.z=0;
 		empty.angular.y=0;
 		empty.angular.x=0;
-		pub_topic = node_.advertise<geometry_msgs::Twist>("firefly/cmd_vel", 1);
-		//trajectory_pub = node_.advertise<mav_msgs::RollPitchYawrateThrust>("test/rollpitchyawthrust", 1);
+		//pub_topic = node_.advertise<geometry_msgs::Twist>("firefly/cmd_vel", 1);
+		trajectory_pub = node_.advertise<trajectory_msgs::MultiDOFJointTrajectory>(mav_msgs::default_topics::COMMAND_TRAJECTORY, 10);
 		action_server_.start();
-		printf("\n Node ready! \n");
+		ROS_INFO_STREAM("\n Node ready! \n");
 }
 private:
 	ros::NodeHandle node_;
 	ActionServer action_server_;
 	ros::Publisher pub_topic;
 
-	//ros::Publisher trajectory_pub;
+	ros::Publisher trajectory_pub;
   	//mav_msgs::RollPitchYawrateThrust desired_wp;
-  
+  	trajectory_msgs::MultiDOFJointTrajectory desired_wp;
+
+	Eigen::Vector3d desired_position;
+	double desired_yaw = 0.0;
+
   	//tf::Quaternion q;
   	double des_roll, des_pitch, des_yaw;
 
@@ -63,7 +83,7 @@ private:
 		{
 			// Stops the controller.
 			if(created){
-				printf("Stop thread \n");
+				ROS_INFO_STREAM("Stop thread \n");
 				pthread_cancel(trajectoryExecutor);
 				created=0;
 			}
@@ -98,9 +118,9 @@ private:
 		//controllore solo per il giunto virtuale Base
 		if(pthread_create(&trajectoryExecutor, NULL, threadWrapper, this)==0){
 			created=1;
-			printf("Thread for trajectory execution created \n");
+			ROS_INFO_STREAM("Thread for trajectory execution created \n");
 		} else {
-			printf("Thread creation failed! \n");
+			ROS_INFO_STREAM("Thread creation failed! \n");
 		}
 
 	}
@@ -115,7 +135,41 @@ private:
 		if(toExecute.joint_names[0]=="virtual_joint" && toExecute.points.size()>0){
 			for(int k=0; k<toExecute.points.size(); k++){
 
-				/*geometry_msgs::Transform_<std::allocator<void> > point=toExecute.points[k].transforms[0];
+
+				//Load the current transform from the Trajectory
+				//geometry_msgs::Transform_<std::allocator<void> > transform=toExecute.points[k].transforms[0];
+
+				trajectory_msgs::MultiDOFJointTrajectoryPoint point=toExecute.points[k];
+				//geometry_msgs::Transform transform=toExecute.points[k].transforms[0];
+				mav_msgs::EigenTrajectoryPoint trajectory_point;
+				
+				//Convert Tranform into EigenTrajectoryPoint
+				mav_msgs::eigenTrajectoryPointFromMsg(point, &trajectory_point);
+
+				//Convert EigenTrajectoryPoint into Trajectory Message
+				mav_msgs::msgMultiDofJointTrajectoryFromEigen(trajectory_point, &desired_wp);
+
+				//Publish the Trajectory Message
+				if(k==0){
+					start_time = ros::Time::now().toSec();
+					current_time = ros::Time::now().toSec();
+
+					desired_wp.header.stamp = ros::Time::now();
+        				desired_wp.header.frame_id = "trajectory_tranform";
+					trajectory_pub.publish(desired_wp);
+				}
+				else{
+
+					while( (current_time-start_time) < toExecute.points[k].time_from_start.toSec() ){
+					current_time = ros::Time::now().toSec();
+					}
+					desired_wp.header.stamp = ros::Time::now();
+        				desired_wp.header.frame_id = "trajectory_transform";
+					trajectory_pub.publish(desired_wp);
+				}
+
+				/*
+				geometry_msgs::Transform_<std::allocator<void> > point=toExecute.points[k].transforms[0];
 
 				desired_wp.position.x = point.translation.x;
   				desired_wp.position.y = point.translation.y;
@@ -146,7 +200,7 @@ private:
 					trajectory_pub.publish(desired_wp);
 				}
                                 */
-
+				/*
 				geometry_msgs::Transform_<std::allocator<void> > point=toExecute.points[k].transforms[0];
 				currentTime = toExecute.points[k].time_from_start;
 				bool execute=true;
@@ -167,6 +221,7 @@ private:
 					lastPosition.rotation=point.rotation;
 					lastTime = toExecute.points[k].time_from_start;
 				}
+				*/
 
 			}
 		}
@@ -175,6 +230,7 @@ private:
 		created=0;
 
 	}
+/*
 	bool publishTranslationComand(geometry_msgs::Transform_<std::allocator<void> > point, bool anyway, double dt){
 		//creazione comando di traslazione
 		cmd.linear.x=(point.translation.x-lastPosition.translation.x)/dt;
@@ -229,6 +285,7 @@ private:
 		printf("cmd to execute: X:%.2f y:%.2f z:%.2f rx:%.2f ry:%.2f rz:%.2f \n", cmd.linear.x, cmd.linear.y, cmd.linear.z, cmd.angular.x, cmd.angular.y, cmd.angular.z);
 	}
 
+*/
 };
 
 int main(int argc, char** argv)

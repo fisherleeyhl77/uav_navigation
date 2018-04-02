@@ -134,12 +134,12 @@ public:
 						controllers_[name] = new_handle;
 					}
 				}
-				else if(type == "MultiDOFFollowJointTrajectory")
+				else if(type == "MultiDofFollowJointTrajectory")
 				{
-					new_handle.reset(new MultiDOFFollowJointTrajectoryControllerHandle(name, action_ns));
-					if (static_cast<MultiDOFFollowJointTrajectoryControllerHandle*>(new_handle.get())->isConnected())
+					new_handle.reset(new MultiDofFollowJointTrajectoryControllerHandle(name, action_ns));
+					if (static_cast<MultiDofFollowJointTrajectoryControllerHandle*>(new_handle.get())->isConnected())
 					{
-						ROS_INFO_STREAM("MoveitSimpleControllerManager: Added MultiDOFFollowJointTrajectory controller for " << name );
+						ROS_INFO_STREAM("MoveitSimpleControllerManager: Added MultiDofFollowJointTrajectory controller for " << name );
 						controllers_[name] = new_handle;
 					}
 				}

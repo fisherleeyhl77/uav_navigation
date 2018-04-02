@@ -39,45 +39,45 @@
 #define MULTI_DOF_FOLLOW_JOINT_CONTROLLER_HANDLE
 
 #include <moveit_simple_controller_manager/action_based_controller_handle.h>
-#include <joint_trajectory_action_controller/MultiDOFFollowJointTrajectoryAction.h>
+#include <joint_trajectory_action_controller/MultiDofFollowJointTrajectoryAction.h>
 
 namespace moveit_simple_controller_manager
 {
 
-class MultiDOFFollowJointTrajectoryControllerHandle : public ActionBasedControllerHandle<joint_trajectory_action_controller::MultiDOFFollowJointTrajectoryAction>
+class MultiDofFollowJointTrajectoryControllerHandle : public ActionBasedControllerHandle<joint_trajectory_action_controller::MultiDofFollowJointTrajectoryAction>
 {
 
 public:
 
-  MultiDOFFollowJointTrajectoryControllerHandle(const std::string &name, const std::string &action_ns) :
-    ActionBasedControllerHandle<joint_trajectory_action_controller::MultiDOFFollowJointTrajectoryAction>(name, action_ns)
+  MultiDofFollowJointTrajectoryControllerHandle(const std::string &name, const std::string &action_ns) :
+    ActionBasedControllerHandle<joint_trajectory_action_controller::MultiDofFollowJointTrajectoryAction>(name, action_ns)
   {
   }
 
   virtual bool sendTrajectory(const moveit_msgs::RobotTrajectory &trajectory)
   {
-    ROS_DEBUG_STREAM("MultiDOFFollowJointTrajectoryController: new trajectory to " << name_);
+    ROS_DEBUG_STREAM("MultiDofFollowJointTrajectoryController: new trajectory to " << name_);
 
     if (!controller_action_client_)
       return false;
 
     if (trajectory.multi_dof_joint_trajectory.points.empty())
     {
-      ROS_ERROR("MultiDOFFollowJointTrajectoryController: cannot execute single-dof trajectories.");
+      ROS_ERROR("MultiDofFollowJointTrajectoryController: cannot execute single-dof trajectories.");
       return false;
     }
 
     if (done_)
-      ROS_DEBUG_STREAM("MultiDOFFollowJointTrajectoryController: sending trajectory to " << name_);
+      ROS_DEBUG_STREAM("MultiDofFollowJointTrajectoryController: sending trajectory to " << name_);
     else
-      ROS_DEBUG_STREAM("MultiDOFFollowJointTrajectoryController: sending continuation for the currently executed trajectory to " << name_);
+      ROS_DEBUG_STREAM("MultiDofFollowJointTrajectoryController: sending continuation for the currently executed trajectory to " << name_);
 
-    joint_trajectory_action_controller::MultiDOFFollowJointTrajectoryGoal goal;
+    joint_trajectory_action_controller::MultiDofFollowJointTrajectoryGoal goal;
     goal.trajectory = trajectory.multi_dof_joint_trajectory;
     controller_action_client_-> sendGoal(goal,
-                    boost::bind(&MultiDOFFollowJointTrajectoryControllerHandle::controllerDoneCallback, this, _1, _2),
-                    boost::bind(&MultiDOFFollowJointTrajectoryControllerHandle::controllerActiveCallback, this),
-                    boost::bind(&MultiDOFFollowJointTrajectoryControllerHandle::controllerFeedbackCallback, this, _1));
+                    boost::bind(&MultiDofFollowJointTrajectoryControllerHandle::controllerDoneCallback, this, _1, _2),
+                    boost::bind(&MultiDofFollowJointTrajectoryControllerHandle::controllerActiveCallback, this),
+                    boost::bind(&MultiDofFollowJointTrajectoryControllerHandle::controllerFeedbackCallback, this, _1));
     done_ = false;
     last_exec_ = moveit_controller_manager::ExecutionStatus::RUNNING;
     return true;
@@ -86,17 +86,17 @@ public:
 protected:
 
   void controllerDoneCallback(const actionlib::SimpleClientGoalState& state,
-                              const joint_trajectory_action_controller::MultiDOFFollowJointTrajectoryResultConstPtr& result)
+                              const joint_trajectory_action_controller::MultiDofFollowJointTrajectoryResultConstPtr& result)
   {
     finishControllerExecution(state);
   }
 
   void controllerActiveCallback()
   {
-    ROS_DEBUG_STREAM("MultiDOFFollowJointTrajectoryController: " << name_ << " started execution");
+    ROS_DEBUG_STREAM("MultiDofFollowJointTrajectoryController: " << name_ << " started execution");
   }
 
-  void controllerFeedbackCallback(const joint_trajectory_action_controller::MultiDOFFollowJointTrajectoryFeedbackConstPtr& feedback)
+  void controllerFeedbackCallback(const joint_trajectory_action_controller::MultiDofFollowJointTrajectoryFeedbackConstPtr& feedback)
   {
   }
 };

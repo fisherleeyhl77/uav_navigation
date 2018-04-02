@@ -2,7 +2,6 @@
   <name>moveit_simple_controller_manager</name>
   <version>0.3.0</version>
   <description> Simple controller manager plugin for MoveIt</description>
-
   <maintainer email="nihad.sa@hotmail.de">Nihad Saliji</maintainer>
   <license>BSD</license>
 

@@ -2,11 +2,10 @@
 <package>
   <name>joint_trajectory_action_controller</name>
   <version>0.3.0</version>
-  <description>The joint_trajectory_action_controller package</description>
-
+  <description> Translates the produced trajectory into an action.</description>
   <maintainer email="nihad.sa@hotmail.de">Nihad Saliji</maintainer>
-
   <license>BSD</license>
+
   <buildtool_depend>catkin</buildtool_depend> 	
   <build_depend>moveit_core</build_depend>
   <build_depend>message_generation</build_depend>
