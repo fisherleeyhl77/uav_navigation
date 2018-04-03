@@ -43,7 +43,8 @@ public:
 		empty.angular.y=0;
 		empty.angular.x=0;
 		//pub_topic = node_.advertise<geometry_msgs::Twist>("firefly/cmd_vel", 1);
-		trajectory_pub = node_.advertise<trajectory_msgs::MultiDOFJointTrajectory>(mav_msgs::default_topics::COMMAND_TRAJECTORY, 10);
+//		trajectory_pub = node_.advertise<trajectory_msgs::MultiDOFJointTrajectory>(mav_msgs::default_topics::COMMAND_TRAJECTORY, 10);
+		trajectory_pub = node_.advertise<trajectory_msgs::MultiDOFJointTrajectory>("/firefly/command/trajectory", 1);
 		action_server_.start();
 		ROS_INFO_STREAM("\n Node ready! \n");
 }
@@ -51,10 +52,13 @@ private:
 	ros::NodeHandle node_;
 	ActionServer action_server_;
 	ros::Publisher pub_topic;
-
 	ros::Publisher trajectory_pub;
+
+
   	//mav_msgs::RollPitchYawrateThrust desired_wp;
-  	trajectory_msgs::MultiDOFJointTrajectory desired_wp;
+	mav_msgs::EigenTrajectoryPoint trajectory_point;
+	trajectory_msgs::MultiDOFJointTrajectory desired_wp;
+
 
 	Eigen::Vector3d desired_position;
 	double desired_yaw = 0.0;
@@ -79,6 +83,7 @@ private:
   	double start_time; 
 
 	void cancelCB(GoalHandle gh){
+		ROS_INFO_STREAM("\n cancelCB \n");
 		if (active_goal_ == gh)
 		{
 			// Stops the controller.
@@ -96,6 +101,7 @@ private:
 	}
 
 	void goalCB(GoalHandle gh){
+		ROS_INFO_STREAM("\n goalCB \n");
 		if (has_active_goal_)
 		{
 			// Stops the controller.
@@ -115,7 +121,7 @@ private:
 		has_active_goal_ = true;
 		toExecute = gh.getGoal()->trajectory;
 
-		//controllore solo per il giunto virtuale Base
+		//virtual Base
 		if(pthread_create(&trajectoryExecutor, NULL, threadWrapper, this)==0){
 			created=1;
 			ROS_INFO_STREAM("Thread for trajectory execution created \n");
@@ -132,16 +138,15 @@ private:
 	}
 
 	void executeTrajectory(){
+		ROS_INFO_STREAM("\n execute trajectory \n");
 		if(toExecute.joint_names[0]=="virtual_joint" && toExecute.points.size()>0){
 			for(int k=0; k<toExecute.points.size(); k++){
 
 
 				//Load the current transform from the Trajectory
-				//geometry_msgs::Transform_<std::allocator<void> > transform=toExecute.points[k].transforms[0];
+				geometry_msgs::Transform_<std::allocator<void> > transform=toExecute.points[k].transforms[0];
 
 				trajectory_msgs::MultiDOFJointTrajectoryPoint point=toExecute.points[k];
-				//geometry_msgs::Transform transform=toExecute.points[k].transforms[0];
-				mav_msgs::EigenTrajectoryPoint trajectory_point;
 				
 				//Convert Tranform into EigenTrajectoryPoint
 				mav_msgs::eigenTrajectoryPointFromMsg(point, &trajectory_point);
@@ -167,6 +172,7 @@ private:
         				desired_wp.header.frame_id = "trajectory_transform";
 					trajectory_pub.publish(desired_wp);
 				}
+
 
 				/*
 				geometry_msgs::Transform_<std::allocator<void> > point=toExecute.points[k].transforms[0];
