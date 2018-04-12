@@ -29,6 +29,7 @@
       <arg name="enable_logging" value="$(arg enable_logging)" />
       <arg name="enable_ground_truth" value="$(arg enable_ground_truth)" />
       <arg name="log_file" value="$(arg log_file)"/>
+      <remap from="odometry" to="odometry_sensor1/odometry" />
     </include>
 
     <node name="lee_position_controller_node" pkg="rotors_control" type="lee_position_controller_node" output="screen">
@@ -38,8 +39,6 @@
     </node>
 
     <node name="hovering_example" pkg="rotors_gazebo" type="hovering_example" output="screen"/>
-
-  </group>
 
 
   <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
@@ -72,6 +71,8 @@
 
    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
 
-    <node name="trajectory_action_controller" pkg="joint_trajectory_action_controller" type="joint_trajectory_action_controller" output="screen"/>
+  <node name="trajectory_action_controller" pkg="joint_trajectory_action_controller" type="joint_trajectory_action_controller" output="screen"/>
+
+  </group>
 
 </launch>
