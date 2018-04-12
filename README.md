@@ -9,6 +9,7 @@ This repository presents a solution for autonomous Unmanned Aerial Vehicle (UAV)
 
 - 3D SLAM is implemented using the camera and firefly sensors. We create a 3D Map of the environment by using pointcloud data from the camera and odometry data. Odometry data within indoor, gps-denied environments is created using the Extended Kalman Filter (EKF) from Inertial Measurement Unit (IMU) data and Visual Odometry data. Additionaly in outdoor cases when we have access to GPS data we can include this as an input in the EKF and improve on the odometry accuracy.
 
+![rtab_mapping](images/rtab_odometry_mapping.png)
 
 - In the next step we create an motion trajectory with open motion planning algorithm which consider obstacles from the generated map. This planning is in realtime, considers new appearing obstructions and creates a trajectory avoiding them.
 
