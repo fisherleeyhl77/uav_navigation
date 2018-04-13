@@ -7,7 +7,7 @@
   <arg name="db_path" default="$(find moveit_config)/default_warehouse_mongo_db" />
 
   <!-- If needed, broadcast static tf -->
-    <node pkg="tf" type="static_transform_publisher" name="virtual_joint_broadcaster_1" args="-0.1 0 0.1 0 0 0 firefly/base_link camera_link 10" />
+    <node pkg="tf" type="static_transform_publisher" name="virtual_joint_broadcaster_1" args="0.1 0.0 -0.03 0 0 0 firefly/base_link camera_link 10" />
   <!-- If needed, broadcast static tf -->
     <node pkg="tf" type="static_transform_publisher" name="virtual_joint_broadcaster_0" args="0 0 0 0 0 0 world map 10" />
 
