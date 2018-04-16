@@ -15,7 +15,7 @@ This repository presents a solution for autonomous Unmanned Aerial Vehicle (UAV)
 
 - In the last step we create a custom designed controller for the UAV which executes the trajectory following motion. This controller sends motor commands to the UAV based on the trajectory data and odometry data. 
 
-![motionexec](images/motionexec.png)
+![motionexec](images/motionexec.PNG)
 
 ### Installation Instructions for Ubuntu 16.04 with ROS Kinetic
 
