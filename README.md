@@ -13,10 +13,9 @@ This repository presents a solution for autonomous Unmanned Aerial Vehicle (UAV)
 
 - In the next step we create an motion trajectory with open motion planning algorithm which consider obstacles from the generated map. This planning is in realtime, considers new appearing obstructions and creates a trajectory avoiding them.
 
-![path_in_rviz](images/path_in_rviz_2.png)
-
-
 - In the last step we create a custom designed controller for the UAV which executes the trajectory following motion. This controller sends motor commands to the UAV based on the trajectory data and odometry data. 
+
+![motionexec](images/motionexec.png)
 
 ### Installation Instructions for Ubuntu 16.04 with ROS Kinetic
 
