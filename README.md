@@ -1,9 +1,9 @@
-## State UAV Navigation with AscTec Firefly and Intel® RealSense™ R200 Camera
+## UAV Navigation System with AscTec Firefly and Intel RealSense R200 Camera
 
 
-This repository presents a solution for autonomous Unmanned Aerial Vehicle (UAV) navigation inside unknown, dynamic and GPS-denied environments. It attents to the topics of 3D Simultaneous Localization and Mapping (SLAM), object avoiding trajectory planning and execution of the trajectory following motions. The implementation is in simulation and reality.
+This repository presents a solution for Unmanned Aerial Vehicle (UAV) navigation inside unknown, dynamic and GPS-denied environments. It attends to the topics of 3D Simultaneous Localization and Mapping (SLAM), object avoiding trajectory planning and execution of the trajectory following motions. The implementation is for simulation and real world.
 
-- First we create a Unified Robot Description Format (URDF) model of the UAV and the camera. The URDF model has to include sensor and actuator plugins for the camera, imu and rotors so it can be simulated with all its properties in Gazebo. The model serves also an important role in real environment. The motion planning algorithm uses the collision model when it calculates the object avoiding trajectories.
+- The first task was to create a Unified Robot Description Format (URDF) model of the UAV and the camera. The URDF model has to include sensor and actuator plugins for the camera, imu and rotors so it can be simulated with all its properties in Gazebo. The model serves also an important role in real environment. The motion planning algorithm uses the collision model when it calculates the object avoiding trajectories.
 
 ![firefly_uav](images/firefly_uav.png)
 
@@ -13,8 +13,7 @@ This repository presents a solution for autonomous Unmanned Aerial Vehicle (UAV)
 
 - In the next step we create an motion trajectory with open motion planning algorithm which consider obstacles from the generated map. This planning is in realtime, considers new appearing obstructions and creates a trajectory avoiding them.
 
-- In the last step we create a custom designed controller for the UAV which executes the trajectory following motion. This controller sends motor commands to the UAV based on the trajectory data and odometry data. 
-
+- In the last step we create a custom designed controller for the UAV which executes the 6-DOF trajectory following motion.
 ![motionexec](images/motionexec.PNG)
 
 ### Installation Instructions for Ubuntu 16.04 with ROS Kinetic
@@ -42,12 +41,20 @@ $ cd ~/catkin_ws/
 $ catkin build
 ```
 
+It might require to build joint_trajectory_action_controller first independently with:
+
+```
+$ catkin build joint_trajectory_action_controller
+```
+
 In case of "error no module future":
 
 ```
 $ sudo apt-get install python-pip
 $ pip install future
 ```
+
+
 
 5. Add sourcing to your `~/.bashrc` file:
 
